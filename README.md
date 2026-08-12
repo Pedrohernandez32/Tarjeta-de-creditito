@@ -1,35 +1,67 @@
-# Tarjeta de crédito
+# 💳 Calculadora de Cuota de Tarjeta de Crédito
 
-## Autor
-Pedro Hernández (@Pedrohernandez32)
+Una pequeña aplicación en Python que calcula cuánto se debe pagar cada mes al diferir una compra con tarjeta de crédito, y cuánto termina costando esa compra en intereses.
 
-## Qué es este proyecto
-Un proyecto simple hecho para aprender: recibe datos de una tarjeta y de una compra, revisa que estén bien y devuelve si la compra se aprueba o no.
+## ✍️ Autor
 
-## Cómo funciona (en palabras sencillas)
-1. Llega la información: número de tarjeta, vencimiento, CVV, nombre y monto.
-2. Se revisa rápido: que no falte nada y que la fecha no esté vencida.
-3. Se protege la tarjeta: no se muestra el número completo, se oculta la mayoría.
-4. Se decide si la compra pasa o no (aprobada / denegada / pendiente).
-5. Se devuelve una respuesta simple con el estado y datos que no sean sensibles.
+**Pedro Hernandez**
 
-## Cómo convierte datos de entrada en salida
+---
 
-Ejemplo de entrada (muy simple):
-{ "card_number": "4111111111111111", "expiry": "2027-08", "cvv": "123", "amount": 125.5 }
+## 🧾 ¿Qué hace esta aplicación?
 
-Transformación paso a paso:
-- Quitar espacios y arreglar formatos.
-- Revisar fecha de vencimiento.
-- Ocultar partes del número para no mostrar todo.
-- Aplicar reglas básicas y decidir resultado.
+Cuando compras algo y decides pagarlo "a cuotas" con tu tarjeta de crédito, el banco te cobra un interés por ese plazo. Esta aplicación simula exactamente ese cálculo: le das los datos de la compra y te dice cuánto pagarás cada mes y cuánto terminarás pagando en total.
 
-Ejemplo de salida:
-{ "status": "approved", "amount": 125.5, "masked_card": "4111 **** **** 1111", "message": "Aprobada" }
+Está pensada como una herramienta educativa, con su lógica separada en tres partes:
 
-## Notas
-- Es un ejemplo para aprender; no usar en producción sin más mejoras.
-- No se deben guardar datos sensibles como el CVV.
+| Archivo | ¿Para qué sirve? |
+|---|---|
+| `logica_tarjeta.py` | El "cerebro" — hace todos los cálculos |
+| `consola_tarjeta.py` | La parte que conversa contigo por consola |
+| `test_tarjeta.py` | Comprueba que los cálculos siempre den el resultado correcto |
 
-## Contacto
-https://github.com/Pedrohernandez32/Tarjeta-de-creditito
+---
+
+## 📥 Datos de entrada
+
+Para calcular la cuota, la aplicación te pide tres cosas:
+
+1. **Monto de la compra** — cuánto vale lo que compraste
+2. **Tasa de interés mensual** — el porcentaje que cobra la tarjeta cada mes
+3. **Plazo (número de cuotas)** — en cuántos meses quieres pagarlo
+
+---
+
+## 📤 ¿Cómo se convierten en salidas?
+
+Con esos tres datos, la aplicación calcula:
+
+- 💰 **Cuota mensual** — lo que pagarás cada mes
+- 📊 **Total de abonos** — la suma de todas las cuotas que vas a pagar
+- 📈 **Total de intereses** — cuánto de más pagaste, solo por financiar la compra
+
+En pocas palabras: entre más alta sea la tasa o más largo el plazo, más intereses terminas pagando — aunque la cuota mensual sea más pequeña. La aplicación hace justo esa cuenta, para que sepas de antemano qué tan conveniente es diferir una compra.
+
+Hay un par de casos especiales que la aplicación reconoce:
+
+- Si la **tasa es 0%**, simplemente divide el monto entre el número de cuotas (sin cobrar nada extra).
+- Si la **tasa supera el 4% mensual**, la aplicación no calcula nada y te avisa que ese interés supera el límite legal permitido (la tasa de usura).
+- Si el **monto de la compra es cero** o el **plazo es menor a un mes**, también te avisa que esos datos no son válidos.
+
+---
+
+## ▶️ Cómo usarla
+
+Desde la terminal, en la carpeta del proyecto:
+
+```
+python consola_tarjeta.py
+```
+
+Y solo tienes que responder las preguntas que te va haciendo (monto, tasa y plazo).
+
+Si quieres verificar que todo esté funcionando correctamente:
+
+```
+python -m unittest test_tarjeta.py -v
+```
