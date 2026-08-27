@@ -8,17 +8,40 @@ Una pequeña aplicación en Python que calcula cuánto se debe pagar cada mes al
 
 ---
 
+## 📁 Estructura del Proyecto
+
+El proyecto está organizado de manera modular siguiendo las buenas prácticas de Python:
+
+```text
+Tarjeta-de-credito/
+├── src/
+│   ├── __init__.py
+│   ├── logica_tarjeta.py       # Lógica de cálculo y excepciones del negocio
+│   └── consola_tarjeta.py      # Interfaz de usuario por consola
+├── tests/
+│   ├── __init__.py
+│   └── test_tarjeta.py         # Suite de pruebas unitarias (unittest)
+├── docs/
+│   └── Casos_de_prueba_tarjeta_de_credito.xlsx # Matriz de casos de prueba
+├── main.py                     # Punto de entrada principal
+├── README.md                   # Documentación del proyecto
+└── .gitignore
+```
+
+---
+
 ## 🧾 ¿Qué hace esta aplicación?
 
 Cuando compras algo y decides pagarlo "a cuotas" con tu tarjeta de crédito, el banco te cobra un interés por ese plazo. Esta aplicación simula exactamente ese cálculo: le das los datos de la compra y te dice cuánto pagarás cada mes y cuánto terminarás pagando en total.
 
 Está pensada como una herramienta educativa, con su lógica separada en tres partes:
 
-| Archivo | ¿Para qué sirve? |
+| Carpeta / Archivo | ¿Para qué sirve? |
 |---|---|
-| `logica_tarjeta.py` | El "cerebro" — hace todos los cálculos |
-| `consola_tarjeta.py` | La parte que conversa contigo por consola |
-| `test_tarjeta.py` | Comprueba que los cálculos siempre den el resultado correcto |
+| `src/logica_tarjeta.py` | El "cerebro" — hace todos los cálculos y valida reglas de negocio |
+| `src/consola_tarjeta.py` | La interfaz que interactúa con el usuario por consola |
+| `tests/test_tarjeta.py` | Comprueba que los cálculos siempre den el resultado correcto |
+| `docs/` | Contiene los casos de prueba de referencia en Excel |
 
 ---
 
@@ -27,7 +50,7 @@ Está pensada como una herramienta educativa, con su lógica separada en tres pa
 Para calcular la cuota, la aplicación te pide tres cosas:
 
 1. **Monto de la compra** — cuánto vale lo que compraste
-2. **Tasa de interés mensual** — el porcentaje que cobra la tarjeta cada mes
+2. **Tasa de interés mensual** — el porcentaje que cobra la tarjeta cada mes (ej. `2.5` para 2.5%)
 3. **Plazo (número de cuotas)** — en cuántos meses quieres pagarlo
 
 ---
@@ -52,16 +75,27 @@ Hay un par de casos especiales que la aplicación reconoce:
 
 ## ▶️ Cómo usarla
 
-Desde la terminal, en la carpeta del proyecto:
+Desde la terminal, en la carpeta raíz del proyecto:
 
+### 1. Ejecutar la aplicación
+Puedes iniciar la aplicación usando el punto de entrada principal:
+```bash
+python main.py
 ```
-python consola_tarjeta.py
+O directamente como módulo:
+```bash
+python -m src.consola_tarjeta
 ```
 
 Y solo tienes que responder las preguntas que te va haciendo (monto, tasa y plazo).
 
-Si quieres verificar que todo esté funcionando correctamente:
+### 2. Ejecutar las pruebas unitarias
+Para verificar que todos los casos de prueba sigan pasando correctamente:
 
+```bash
+python -m unittest discover tests -v
 ```
-python -m unittest test_tarjeta.py -v
+o también:
+```bash
+python -m unittest tests/test_tarjeta.py -v
 ```

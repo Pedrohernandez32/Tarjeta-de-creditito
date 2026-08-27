@@ -1,0 +1,31 @@
+try:
+    from src import logica_tarjeta
+except ImportError:
+    import logica_tarjeta
+
+"""
+La interfaz de usuario del programa debe separarse del modulo
+que contiene la lógica.
+ 
+En este caso, la interfaz de usuario queda en consola_tarjeta.py
+y la lógica queda en logica_tarjeta.py
+"""
+
+
+def iniciar_consola():
+    try:
+        print("Este programa le permite calcular la cuota a pagar por una compra con tarjeta de credito")
+        monto = float(input("Monto de la compra:"))
+        tasa = float(input("Tasa de interés de la tarjeta:")) / 100
+        plazo = float(input("Numero de cuotas en que va a diferir la compra:"))
+
+        cuota = round(logica_tarjeta.calcular_cuota(monto, tasa, plazo), 2)
+        print(f"La cuota mensual a pagar es de: {cuota}")
+
+    except Exception as err:
+        print("No se pudo calcular la cuota")
+        print(str(err))
+
+
+if __name__ == "__main__":
+    iniciar_consola()
